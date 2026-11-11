@@ -1,0 +1,167 @@
+<!--meta {"title": "Members", "description": "The Tower Club members' hub: this week's menu, the calendar, guest meals and house tools.", "next": "join"} -->
+    <!-- NOTE: menu, events and notices below are SAMPLE CONTENT. Replace with real data (or wire to the club's backend). -->
+    <section class="page-hero page-hero--short">
+      <div class="page-hero__pattern"></div>
+      <div class="page-hero__giant" aria-hidden="true">Home</div>
+      <div class="container">
+        <p class="eyebrow eyebrow--light" data-fade><span class="num">06</span>Members’ Hub</p>
+        <h1 class="page-hero__title rise">Welcome <br /><em>home.</em></h1>
+        <div class="page-hero__row">
+          <div data-fade>
+            <p class="page-hero__lede"><span data-greeting>Hello</span>, Tower. Menus, the calendar, guest meals and everything else you need for life at 13 Prospect.</p>
+            <div class="signin">
+              <!-- TODO: point at Princeton CAS once member sign-in is set up -->
+              <a class="btn btn--light magnetic" href="#member-tools"><span>Sign in with NetID</span></a>
+              <small>Some tools need a member sign-in.</small>
+            </div>
+          </div>
+          <p class="page-hero__aside" data-fade>Members only<br />13 Prospect Avenue</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK LINKS -->
+    <section class="section" id="member-tools">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow" data-reveal><span class="num">01</span>Quick Links</p>
+            <h2 class="display">Everything <br /><em>in one place.</em></h2>
+          </div>
+          <p class="section-head__aside" data-reveal>The tools members use most, all in one place.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile" href="#menu" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 0 4 0V3M9 11v10M17 3c-2 0-3 2-3 5s1 4 3 4v9" /></svg></span>
+            <h3>This Week’s Menu</h3><p>Breakfast, lunch &amp; dinner</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="#member-tools" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" /><path d="M3 20c0-3 3-5 6-5s6 2 6 5M17 8v6M14 11h6" /></svg></span>
+            <h3>Guest Meals</h3><p>Sign up a friend for a meal</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="#calendar" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg></span>
+            <h3>Club Calendar</h3><p>Events, formals &amp; open meals</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="#member-tools" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" /></svg></span>
+            <h3>Intramurals</h3><p>Schedules &amp; team sign-ups</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="#member-tools" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12M9 21v-6h6v6" /></svg></span>
+            <h3>Room Reservations</h3><p>Book a room in the house</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="#member-tools" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2" /><path d="M3 10h18M7 15h4" /></svg></span>
+            <h3>Dues &amp; Billing</h3><p>Statements and payments</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="#member-tools" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5" /></svg></span>
+            <h3>House Rules</h3><p>Policies &amp; the constitution</p><span class="tile__arrow">↗</span>
+          </a>
+          <a class="tile" href="mailto:towerclubmanager@gmail.com?subject=House%20issue" data-reveal>
+            <span class="tile__icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z" /></svg></span>
+            <h3>Report an Issue</h3><p>Something broken? Tell us</p><span class="tile__arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="section section--tint" id="menu">
+      <div class="container">
+        <div class="dash">
+          <div class="box" data-tabs data-reveal>
+            <div class="box__head"><h3>This Week’s Menu</h3><span>Sample week</span></div>
+            <div class="tabs" role="tablist" aria-label="Day of the week">
+              <span class="tabs__ink"></span>
+              <button role="tab" id="t-mon" aria-controls="d-mon" data-day="1">Mon</button>
+              <button role="tab" id="t-tue" aria-controls="d-tue" data-day="2">Tue</button>
+              <button role="tab" id="t-wed" aria-controls="d-wed" data-day="3">Wed</button>
+              <button role="tab" id="t-thu" aria-controls="d-thu" data-day="4">Thu</button>
+              <button role="tab" id="t-fri" aria-controls="d-fri" data-day="5">Fri</button>
+              <button role="tab" id="t-sat" aria-controls="d-sat" data-day="6">Sat</button>
+              <button role="tab" id="t-sun" aria-controls="d-sun" data-day="0">Sun</button>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-mon" aria-labelledby="t-mon">
+              <div class="meal"><b>Breakfast</b><p>Buttermilk pancakes &amp; maple bacon<small>Fruit, yogurt bar, eggs to order</small></p></div>
+              <div class="meal"><b>Lunch</b><p>Chicken Caesar wraps<small>Tomato bisque, salad bar</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Braised short ribs, garlic mash<small>Roasted carrots · vegetarian: mushroom stroganoff</small></p></div>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-tue" aria-labelledby="t-tue" hidden>
+              <div class="meal"><b>Breakfast</b><p>Breakfast burritos<small>Salsa verde, fruit, cereal bar</small></p></div>
+              <div class="meal"><b>Lunch</b><p>Build-your-own grain bowls<small>Falafel, chicken shawarma, tahini</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Taco Tuesday<small>Carnitas, fish tacos, elote · vegan: sweet potato &amp; black bean</small></p></div>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-wed" aria-labelledby="t-wed" hidden>
+              <div class="meal"><b>Breakfast</b><p>Bagels &amp; lox<small>Cream cheese, capers, eggs to order</small></p></div>
+              <div class="meal"><b>Lunch</b><p>Grilled cheese &amp; tomato soup<small>Salad bar, fruit</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Herb-roasted chicken<small>Wild rice, green beans · vegetarian: stuffed peppers</small></p></div>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-thu" aria-labelledby="t-thu" hidden>
+              <div class="meal"><b>Breakfast</b><p>French toast<small>Berries, whipped cream, bacon</small></p></div>
+              <div class="meal"><b>Lunch</b><p>Banh mi sandwiches<small>Pickled vegetables, lemongrass tofu</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Steak night<small>Fries, creamed spinach · vegetarian: cauliflower steak</small></p></div>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-fri" aria-labelledby="t-fri" hidden>
+              <div class="meal"><b>Breakfast</b><p>Breakfast sandwiches<small>Egg, cheese, choice of bacon or avocado</small></p></div>
+              <div class="meal"><b>Lunch</b><p>Pizza from the oven<small>Margherita, pepperoni, seasonal special</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Open Meal: salmon &amp; risotto<small>Guests welcome · vegetarian: lemon risotto</small></p></div>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-sat" aria-labelledby="t-sat" hidden>
+              <div class="meal"><b>Brunch</b><p>Chicken &amp; waffles<small>Omelette station, fruit, pastries</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Burger bar<small>Beef, turkey &amp; veggie burgers, sweet potato fries</small></p></div>
+            </div>
+            <div class="menu-day" role="tabpanel" id="d-sun" aria-labelledby="t-sun" hidden>
+              <div class="meal"><b>Brunch</b><p>Eggs Benedict<small>Hash browns, smoked salmon, yogurt parfaits</small></p></div>
+              <div class="meal"><b>Dinner</b><p>Sunday pasta night<small>Bolognese, pesto, garlic bread, Caesar salad</small></p></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="box" id="calendar" data-reveal>
+              <div class="box__head"><h3>Upcoming</h3><span>Sample events</span></div>
+              <ul class="agenda">
+                <li><span class="agenda__date"><b>13</b><small>Nov</small></span><div><h4>Open Meal: Friday Dinner</h4><p>6:00 pm · Dining Room · guests welcome</p></div></li>
+                <li><span class="agenda__date"><b>15</b><small>Nov</small></span><div><h4>IM Basketball vs. Cannon</h4><p>8:00 pm · Dillon Gym</p></div></li>
+                <li><span class="agenda__date"><b>19</b><small>Nov</small></span><div><h4>Thanksgiving Dinner</h4><p>6:30 pm · formal attire</p></div></li>
+                <li><span class="agenda__date"><b>05</b><small>Dec</small></span><div><h4>Winter Formal</h4><p>9:00 pm · The Great Room</p></div></li>
+                <li><span class="agenda__date"><b>11</b><small>Dec</small></span><div><h4>Dean’s Date Study Break</h4><p>10:00 pm · late-night breakfast</p></div></li>
+              </ul>
+            </div>
+            <div class="box" data-reveal>
+              <div class="box__head"><h3>Notices</h3><span>From the officers</span></div>
+              <div class="notice"><span class="notice__dot"></span><div><h4>125th anniversary planning</h4><p>Want to help plan the Founders’ Dinner? Talk to the Social VP.</p></div></div>
+              <div class="notice"><span class="notice__dot"></span><div><h4>Guest meal limits</h4><p>Each member may bring up to two guests per week. Sign them up by noon.</p></div></div>
+              <div class="notice"><span class="notice__dot"></span><div><h4>Lost &amp; found</h4><p>Unclaimed items go to donation at the end of the month.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow" data-reveal><span class="num">02</span>Need Something?</p>
+            <h2 class="display">Ask an <br /><em>officer.</em></h2>
+          </div>
+          <p class="section-head__aside" data-reveal>Each officer looks after a part of club life. Find the right person on the leadership page, or email the manager about the house.</p>
+        </div>
+        <div class="panels panels--2">
+          <article class="panel" data-reveal>
+            <span class="panel__icon">✉</span>
+            <h3>The house</h3>
+            <p>Maintenance, deliveries, room bookings and anything about the building.</p>
+            <a class="link-arrow" href="mailto:towerclubmanager@gmail.com">Email the manager <span>→</span></a>
+          </article>
+          <article class="panel panel--ink" data-reveal>
+            <span class="panel__icon">✦</span>
+            <h3>The officers</h3>
+            <p>Social events, intramurals, membership, technology and more.</p>
+            <a class="btn btn--light magnetic" href="leadership.html"><span>Meet the officers</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
