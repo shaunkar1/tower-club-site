@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=d97bbaa918" />
+  <link rel="stylesheet" href="css/style.css?v=8275119a45" />
   <script>
     // Before first paint: skip the long preloader once this session has seen it
     (function () {
@@ -38,7 +38,6 @@
   </div>
 
   <div class="progress" aria-hidden="true"><span></span></div>
-  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
 
   <header class="nav" id="nav">
     <a href="index.html" class="nav__brand" aria-label="Princeton Tower Club home">
@@ -212,7 +211,7 @@
           </div>
           <p class="section-head__aside" data-reveal>Drag across the photograph to compare the clubhouse in 1921 with today. The front door and the tower look much the same.</p>
         </div>
-        <div class="compare" data-compare data-reveal data-cursor="Drag">
+        <div class="compare" data-compare data-reveal>
           <img class="compare__now" src="images/tower-wiki.jpg" alt="Tower Club today" />
           <div class="compare__then grain"><img src="images/archive/1921-clubhouse.jpg" alt="Tower Club in 1921" /></div>
           <span class="compare__line"></span>
@@ -257,14 +256,14 @@
           <p class="section-head__aside" data-reveal>Early photographs of the houses Tower has called home. You can drag them around to take a closer look.</p>
         </div>
         <div class="scatter" data-scatter>
-          <figure class="polaroid" style="--x:0%;--y:4%;--r:-7deg" data-cursor="Drag"><img src="images/archive/1902-monastery.jpg" alt="The Monastery" loading="lazy" /><figcaption><small>c. 1902</small>The Monastery</figcaption></figure>
-          <figure class="polaroid" style="--x:19%;--y:36%;--r:5deg" data-cursor="Drag"><img src="images/archive/1902-incubator.jpg" alt="The Incubator" loading="lazy" /><figcaption><small>1903</small>The Incubator</figcaption></figure>
-          <figure class="polaroid" style="--x:37%;--y:2%;--r:-3deg" data-cursor="Drag"><img src="images/archive/1895-old-cottage.jpg" alt="The old Cottage clubhouse at 89 Prospect" loading="lazy" /><figcaption><small>1904–1911</small>89 Prospect</figcaption></figure>
-          <figure class="polaroid" style="--x:56%;--y:30%;--r:7deg" data-cursor="Drag"><img src="images/archive/1905-fine-house-quad.jpg" alt="The Fine House when it was Quadrangle Club" loading="lazy" /><figcaption><small>c. 1905</small>The Fine House, as Quad</figcaption></figure>
-          <figure class="polaroid" style="--x:74%;--y:0%;--r:-5deg" data-cursor="Drag"><img src="images/archive/1911-fine-house.jpg" alt="The Fine House on Nassau Street" loading="lazy" /><figcaption><small>1911–1917</small>Nassau Street</figcaption></figure>
-          <figure class="polaroid" style="--x:4%;--y:50%;--r:4deg" data-cursor="Drag"><img src="images/archive/1919-clubhouse.jpg" alt="13 Prospect around 1919" loading="lazy" /><figcaption><small>c. 1919</small>13 Prospect, new</figcaption></figure>
-          <figure class="polaroid" style="--x:40%;--y:54%;--r:-6deg" data-cursor="Drag"><img src="images/archive/1930s-prospect.jpg" alt="Tower Club from Prospect Avenue, mid-century" loading="lazy" /><figcaption><small>Mid-century</small>From the Street</figcaption></figure>
-          <figure class="polaroid polaroid--contain" style="--x:73%;--y:50%;--r:3deg" data-cursor="Drag"><img src="images/bookplate.png" alt="Princeton Tower Club Ex Libris bookplate" loading="lazy" /><figcaption><small>Ex Libris</small>The club bookplate</figcaption></figure>
+          <figure class="polaroid" style="--x:0%;--y:4%;--r:-7deg"><img src="images/archive/1902-monastery.jpg" alt="The Monastery" loading="lazy" /><figcaption><small>c. 1902</small>The Monastery</figcaption></figure>
+          <figure class="polaroid" style="--x:19%;--y:36%;--r:5deg"><img src="images/archive/1902-incubator.jpg" alt="The Incubator" loading="lazy" /><figcaption><small>1903</small>The Incubator</figcaption></figure>
+          <figure class="polaroid" style="--x:37%;--y:2%;--r:-3deg"><img src="images/archive/1895-old-cottage.jpg" alt="The old Cottage clubhouse at 89 Prospect" loading="lazy" /><figcaption><small>1904–1911</small>89 Prospect</figcaption></figure>
+          <figure class="polaroid" style="--x:56%;--y:30%;--r:7deg"><img src="images/archive/1905-fine-house-quad.jpg" alt="The Fine House when it was Quadrangle Club" loading="lazy" /><figcaption><small>c. 1905</small>The Fine House, as Quad</figcaption></figure>
+          <figure class="polaroid" style="--x:74%;--y:0%;--r:-5deg"><img src="images/archive/1911-fine-house.jpg" alt="The Fine House on Nassau Street" loading="lazy" /><figcaption><small>1911–1917</small>Nassau Street</figcaption></figure>
+          <figure class="polaroid" style="--x:4%;--y:50%;--r:4deg"><img src="images/archive/1919-clubhouse.jpg" alt="13 Prospect around 1919" loading="lazy" /><figcaption><small>c. 1919</small>13 Prospect, new</figcaption></figure>
+          <figure class="polaroid" style="--x:40%;--y:54%;--r:-6deg"><img src="images/archive/1930s-prospect.jpg" alt="Tower Club from Prospect Avenue, mid-century" loading="lazy" /><figcaption><small>Mid-century</small>From the Street</figcaption></figure>
+          <figure class="polaroid polaroid--contain" style="--x:73%;--y:50%;--r:3deg"><img src="images/bookplate.png" alt="Princeton Tower Club Ex Libris bookplate" loading="lazy" /><figcaption><small>Ex Libris</small>The club bookplate</figcaption></figure>
           <p class="scatter__hint">Drag the photographs</p>
         </div>
         <p class="credit">Archival photographs: Princeton University Archives and the Bric-a-Brac yearbooks, courtesy of the Princetoniana Museum.</p>
@@ -310,6 +309,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/main.js?v=d97bbaa918"></script>
+  <script src="js/main.js?v=8275119a45"></script>
 </body>
 </html>

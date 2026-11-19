@@ -8,7 +8,10 @@
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const desktop = matchMedia('(min-width: 901px)');
   if (!motion) html.classList.add('reduced');
-  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+  if (hasGsap) {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
+  }
 
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -66,7 +69,7 @@
   /* ---------- Smooth scroll ---------- */
   let lenis = null;
   if (motion && typeof window.Lenis !== 'undefined') {
-    lenis = new Lenis({ lerp: 0.09 });
+    lenis = new Lenis({ lerp: 0.12 });
     lenis.stop();
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -127,8 +130,8 @@
     } else {
       gsap.timeline()
         .set(curtain, { yPercent: 0 })
-        .to(curtain, { yPercent: -100, duration: 1, ease: 'expo.inOut', delay: 0.1 })
-        .add(ready, 0.55)
+        .to(curtain, { yPercent: -100, duration: 0.8, ease: 'expo.inOut', delay: 0.05 })
+        .add(ready, 0.4)
         .set(curtain, { yPercent: 100 });
     }
   }
@@ -138,8 +141,8 @@
     $('.curtain__label').textContent = label;
     closeMenu();
     gsap.timeline({ onComplete: () => (location.href = href) })
-      .fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.8, ease: 'expo.inOut' })
-      .from('.curtain > *', { y: 30, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'expo.out' }, '-=0.35');
+      .fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.6, ease: 'expo.inOut' })
+      .from('.curtain > *', { y: 30, opacity: 0, stagger: 0.05, duration: 0.4, ease: 'expo.out' }, '-=0.3');
   }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
@@ -168,21 +171,25 @@
   const nav = $('#nav');
   const heroEl = $('.hero, .page-hero, .anniv-hero');
   const progressBar = $('.progress span');
-  let lastY = 0;
+  let lastY = 0, threshold = 60, maxScroll = 1;
+  function measure() {
+    const heroBox = heroEl && heroEl.parentElement.classList.contains('pin-spacer') ? heroEl.parentElement : heroEl;
+    threshold = heroBox ? Math.max(heroBox.offsetHeight - 90, 60) : 60;
+    maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  }
   function onScroll() {
     const y = window.scrollY;
-    const heroBox = heroEl && heroEl.parentElement.classList.contains('pin-spacer') ? heroEl.parentElement : heroEl;
-    const threshold = heroBox ? Math.max(heroBox.offsetHeight - 90, 60) : 60;
     nav.classList.toggle('is-scrolled', y > threshold);
     nav.classList.toggle('is-hidden', y > lastY + 2 && y > 500 && !body.classList.contains('menu-open'));
     if (y < lastY - 2) nav.classList.remove('is-hidden');
     lastY = y;
-    if (progressBar) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progressBar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
-    }
+    if (progressBar) progressBar.style.transform = `scaleX(${Math.min(1, y / maxScroll)})`;
   }
+  measure();
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  if (hasGsap) ScrollTrigger.addEventListener('refresh', measure);
   onScroll();
 
   const toggle = $('.nav__toggle');
@@ -347,7 +354,7 @@
     let w = 0, h = 0, running = false, looping = false, mx = -999, my = -999;
     const parts = [];
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = canvas.offsetWidth; h = canvas.offsetHeight;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -359,7 +366,7 @@
     });
     resize();
     window.addEventListener('resize', resize);
-    for (let i = 0; i < Math.round(Math.min(140, (w * h) / 8000)); i++) parts.push(make(true));
+    for (let i = 0; i < Math.round(Math.min(90, (w * h) / 11000)); i++) parts.push(make(true));
     canvas.parentElement.addEventListener('mousemove', (e) => {
       const r = canvas.getBoundingClientRect();
       mx = e.clientX - r.left; my = e.clientY - r.top;
@@ -428,11 +435,13 @@
   $$('.hero[data-live]').forEach((hero) => {
     const media = $('.hero__media', hero);
     const photo = $('img', media);
-    // Window panes in the 1920×1080 hero photo that glow after dark
+    // Glass in the 1920×1080 hero photo that glows after dark: [x, y, width, height], measured to the panes
+    // (not the white frames) and stopping where hedges cover them. The front door gets its arched shape.
     const IMG = [1920, 1080];
-    const WINDOWS = [[356, 502, 160, 78], [420, 400, 28, 52], [334, 694, 206, 96], [682, 700, 54, 126], [776, 426, 72, 66], [1016, 426, 40, 66],
-      [790, 546, 104, 80], [922, 548, 44, 72], [1016, 546, 40, 72], [792, 710, 104, 64], [1012, 724, 48, 40], [1256, 474, 48, 48], [1474, 474, 48, 48],
-      [1142, 572, 92, 74], [1356, 572, 120, 74], [1546, 572, 64, 74], [1114, 728, 80, 48], [1434, 724, 144, 80], [1250, 730, 64, 116]];
+    const WINDOWS = [[367, 513, 136, 60], [345, 707, 187, 42], [345, 751, 28, 39], [687, 717, 46, 104], [790, 440, 53, 41], [1028, 441, 21, 39],
+      [800, 557, 93, 58], [935, 559, 21, 54], [1027, 554, 22, 61], [803, 722, 90, 38], [1025, 735, 31, 26], [1263, 488, 34, 30],
+      [1480, 488, 33, 29], [1149, 579, 79, 61], [1363, 579, 108, 61], [1553, 579, 52, 61], [1120, 734, 70, 30], [1439, 730, 135, 62],
+      [1245, 731, 74, 119, 'door']];
     // Approximate sunrise and sunset in Princeton for each month, in local clock hours
     const SUN = [[7.25, 16.95], [6.9, 17.5], [7.1, 19.1], [6.4, 19.6], [5.75, 20.1], [5.45, 20.5], [5.6, 20.45], [6.1, 19.95], [6.6, 19.15], [7.15, 18.3], [6.75, 16.75], [7.15, 16.6]];
     const LABEL = { day: 'Daylight', dusk: 'Golden hour', night: 'After dark' };
@@ -451,23 +460,25 @@
     layer.className = 'hero__layer live';
     layer.innerHTML = '<div class="live__dusk"></div><div class="live__night"></div><canvas class="live__stars"></canvas><div class="live__windows"></div>';
     media.appendChild(layer);
-    const wins = WINDOWS.map(() => {
+    const wins = WINDOWS.map((win) => {
       const w = document.createElement('span');
-      w.className = 'live__win';
+      w.className = win[4] ? `live__win live__win--${win[4]}` : 'live__win';
       w.style.transitionDelay = `${Math.random() * 1.6}s`;
       $('.live__windows', layer).appendChild(w);
       return w;
     });
     const chip = document.createElement('div');
     chip.className = 'live-chip';
-    chip.innerHTML = `<span class="live-chip__dot"></span><span class="live-chip__text"><b>Live</b><span> from Prospect Ave</span> · <em></em></span>
+    chip.innerHTML = `<span class="live-chip__dot"></span><span class="live-chip__text"><b>Live</b><span> from Prospect Ave</span><em></em></span>
       <span class="live-chip__modes" role="group" aria-label="Preview the clubhouse at different times of day">${['Now', 'Day', 'Dusk', 'Night']
         .map((m) => `<button type="button" data-m="${m === 'Now' ? 'auto' : m.toLowerCase()}">${m}</button>`).join('')}</span>`;
     hero.appendChild(chip);
 
     const place = () => {
       const W = media.offsetWidth, H = media.offsetHeight;
-      const s = Math.max(W / IMG[0], H / IMG[1]), ox = (W - IMG[0] * s) / 2, oy = (H - IMG[1] * s) / 2;
+      // Follow the photo's object-position (phones crop toward the tower and front door)
+      const [fx, fy] = getComputedStyle(photo).objectPosition.split(' ').map((v) => (v.endsWith('%') ? parseFloat(v) / 100 : 0.5));
+      const s = Math.max(W / IMG[0], H / IMG[1]), ox = (W - IMG[0] * s) * fx, oy = (H - IMG[1] * s) * fy;
       wins.forEach((w, i) => {
         const [x, y, ww, hh] = WINDOWS[i];
         Object.assign(w.style, { left: `${ox + x * s}px`, top: `${oy + y * s}px`, width: `${ww * s}px`, height: `${hh * s}px` });
@@ -486,24 +497,26 @@
         c.fill();
       }
     };
+    const door = wins[WINDOWS.findIndex((win) => win[4] === 'door')];
+    const panes = wins.filter((w) => w !== door);
     let mode = 'auto';
     const apply = () => {
       const phase = mode === 'auto' ? phaseNow() : mode;
       layer.dataset.phase = phase;
       photo.dataset.phase = phase;
-      // Night: nearly every window lit. Dusk: about half. Day: none.
-      wins.forEach((w) => w.classList.toggle('is-lit', phase === 'night' ? Math.random() > 0.12 : phase === 'dusk' && Math.random() > 0.5));
+      // Night: nearly every window lit. Dusk: about half, and the front door. Day: none.
+      wins.forEach((w) => w.classList.toggle('is-lit', w === door ? phase !== 'day' : phase === 'night' ? Math.random() > 0.12 : phase === 'dusk' && Math.random() > 0.5));
       const time = new Intl.DateTimeFormat('en-US', { ...zone, hour: 'numeric', minute: '2-digit' }).format(new Date());
-      $('.live-chip__text em', chip).textContent = mode === 'auto' ? `${time} · ${LABEL[phase]}` : `Preview · ${LABEL[phase]}`;
+      $('.live-chip__text em', chip).textContent = mode === 'auto' ? ` · ${time} · ${LABEL[phase]}` : ` · Preview · ${LABEL[phase]}`;
       $$('[data-m]', chip).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === mode)));
     };
     $$('[data-m]', chip).forEach((b) => b.addEventListener('click', () => { mode = b.dataset.m; apply(); }));
     window.addEventListener('resize', place);
     place();
     apply();
-    setInterval(() => mode === 'auto' && apply(), 30000);
+    setInterval(() => mode === 'auto' && !document.hidden && apply(), 30000);
     // After dark a window or two flicks on and off, like people coming and going
-    setInterval(() => layer.dataset.phase === 'night' && wins[(Math.random() * wins.length) | 0].classList.toggle('is-lit'), 2200);
+    setInterval(() => layer.dataset.phase === 'night' && !document.hidden && panes[(Math.random() * panes.length) | 0].classList.toggle('is-lit'), 2200);
   });
 
   if (!motion) return;
@@ -519,13 +532,30 @@
     lastScroll = y;
   });
 
+  // Tracks whether an element is on screen, so per-frame effects can rest when it isn't
+  const onScreen = (el) => {
+    const state = { visible: false };
+    new IntersectionObserver(([e]) => (state.visible = e.isIntersecting), { rootMargin: '100px 0px' }).observe(el);
+    return state;
+  };
+  // Only restart a smoothing tween when the target value actually moves
+  const settle = (fn, step) => {
+    let last = 0;
+    return (v) => {
+      v = Math.round(v / step) * step;
+      if (v !== last) fn((last = v));
+    };
+  };
+
   // Marquees: drift, speed up and lean with the scroll, reverse on scroll-up
   $$('.marquee__track').forEach((track) => {
     let x = 0, dir = 1, half = track.scrollWidth / 2;
     window.addEventListener('resize', () => (half = track.scrollWidth / 2));
+    const seen = onScreen(track.parentElement);
     const setX = gsap.quickSetter(track, 'x', 'px');
-    const skew = gsap.quickTo(track, 'skewX', { duration: 0.6, ease: 'power3' });
+    const skew = settle(gsap.quickTo(track, 'skewX', { duration: 0.6, ease: 'power3' }), 0.25);
     gsap.ticker.add((time, delta) => {
+      if (!seen.visible) return;
       if (Math.abs(velocity) > 0.6) dir = velocity > 0 ? 1 : -1;
       x -= (0.055 * delta + Math.abs(velocity) * 0.7) * dir;
       if (x <= -half) x += half;
@@ -537,8 +567,9 @@
 
   // Images that lean with fast scrolling
   $$('[data-skew]').forEach((el) => {
-    const skew = gsap.quickTo(el, 'skewY', { duration: 0.6, ease: 'power3' });
-    gsap.ticker.add(() => skew(gsap.utils.clamp(-5, 5, velocity * 0.12)));
+    const seen = onScreen(el);
+    const skew = settle(gsap.quickTo(el, 'skewY', { duration: 0.6, ease: 'power3' }), 0.1);
+    gsap.ticker.add(() => seen.visible && skew(gsap.utils.clamp(-5, 5, velocity * 0.12)));
   });
 
   // Headings: characters rise out of masks as they enter
@@ -618,13 +649,22 @@
       const [src, year, name] = item.split('|').map((x) => x.trim());
       return { src, year, name };
     });
-    photos.forEach((p) => (new Image().src = p.src));
+    new IntersectionObserver((entries, io) => {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      photos.forEach((p) => {
+        const im = new Image();
+        im.src = p.src;
+        im.decode().catch(() => {});
+      });
+    }, { rootMargin: '150% 0px' }).observe(sec);
     let z = 1, shown = -1, next = 0, px = null, py = null, mx = -999, my = -999;
     const show = (k, x, y) => {
       const p = photos[k];
       const im = document.createElement('img');
       im.className = 'trail__img';
       im.alt = '';
+      im.decoding = 'async';
       im.src = p.src;
       stage.appendChild(im);
       gsap.set(im, { x, y, xPercent: -50, yPercent: -50, zIndex: z++, rotate: gsap.utils.random(-12, 12), scale: 0.3, opacity: 0 });
@@ -743,33 +783,21 @@
   /* ---------- Pointer niceties (desktop only) ---------- */
   if (!finePointer) return;
 
-  // Custom cursor
-  const cursor = $('.cursor');
-  const label = $('.cursor__label');
-  const cx = gsap.quickTo(cursor, 'x', { duration: 0.35, ease: 'power3' });
-  const cy = gsap.quickTo(cursor, 'y', { duration: 0.35, ease: 'power3' });
-  window.addEventListener('mousemove', (e) => {
-    cursor.classList.add('is-visible');
-    cx(e.clientX);
-    cy(e.clientY);
-  });
-  document.addEventListener('mouseleave', () => cursor.classList.remove('is-visible'));
-  document.addEventListener('mouseover', (e) => {
-    const labelled = e.target.closest('[data-cursor]');
-    const link = e.target.closest('a, button, input, select, textarea, .ag__panel, .roster li');
-    cursor.classList.toggle('is-label', !!labelled);
-    cursor.classList.toggle('is-dark-label', !!labelled && labelled.dataset.cursorTone === 'gold');
-    cursor.classList.toggle('is-link', !labelled && !!link);
-    if (labelled) label.textContent = labelled.dataset.cursor;
-  });
-
   // Magnetic buttons
   $$('.magnetic').forEach((btn) => {
+    const mx = gsap.quickTo(btn, 'x', { duration: 0.6, ease: 'power3.out' });
+    const my = gsap.quickTo(btn, 'y', { duration: 0.6, ease: 'power3.out' });
+    let box = null;
+    btn.addEventListener('mouseenter', () => (box = btn.getBoundingClientRect()));
     btn.addEventListener('mousemove', (e) => {
-      const r = btn.getBoundingClientRect();
-      gsap.to(btn, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.6, ease: 'power3.out' });
+      const r = box || btn.getBoundingClientRect();
+      mx((e.clientX - r.left - r.width / 2) * 0.25);
+      my((e.clientY - r.top - r.height / 2) * 0.35);
     });
-    btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, 0.4)' }));
+    btn.addEventListener('mouseleave', () => {
+      box = null;
+      gsap.to(btn, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1, 0.4)', overwrite: true });
+    });
   });
 
   // 3D tilt cards
@@ -786,8 +814,11 @@
   // Hero photo follows the mouse a touch (x/y compose with the scroll yPercent)
   const heroMedia = $('.hero__media');
   if (heroMedia) {
+    const hx = gsap.quickTo(heroMedia, 'x', { duration: 1.4, ease: 'power3.out' });
+    const hy = gsap.quickTo(heroMedia, 'y', { duration: 1.4, ease: 'power3.out' });
     $('.hero').addEventListener('mousemove', (e) => {
-      gsap.to(heroMedia, { x: (e.clientX / innerWidth - 0.5) * -26, y: (e.clientY / innerHeight - 0.5) * -18, duration: 1.4, ease: 'power3.out' });
+      hx((e.clientX / innerWidth - 0.5) * -26);
+      hy((e.clientY / innerHeight - 0.5) * -18);
     });
   }
 
