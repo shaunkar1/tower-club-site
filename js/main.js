@@ -822,36 +822,16 @@
     });
   }
 
-  // Hover lists: a floating photo follows the cursor and swaps per row
+  // Hover lists: the row under the cursor stays bright, the rest dim
   $$('[data-hover-list]').forEach((list) => {
     const rows = $$('.hl__row', list);
-    const float = document.createElement('div');
-    float.className = 'hl__float';
-    float.innerHTML = `<div class="hl__frame">${rows.map((r) => `<img src="${r.dataset.img}" alt="">`).join('')}</div>`;
-    body.appendChild(float);
-    const imgs = $$('img', float);
-    gsap.set(float, { xPercent: -50, yPercent: -50 });
-    const fx = gsap.quickTo(float, 'x', { duration: 0.7, ease: 'power3' });
-    const fy = gsap.quickTo(float, 'y', { duration: 0.7, ease: 'power3' });
-    const fr = gsap.quickTo(float, 'rotate', { duration: 0.9, ease: 'power3' });
-    let lastX = 0;
-    list.addEventListener('mousemove', (e) => {
-      fx(e.clientX);
-      fy(e.clientY);
-      fr(gsap.utils.clamp(-12, 12, (e.clientX - lastX) * 0.6));
-      lastX = e.clientX;
-    });
-    rows.forEach((row, i) => {
-      row.addEventListener('mouseenter', (e) => {
-        if (!float.classList.contains('is-on')) gsap.set(float, { x: e.clientX, y: e.clientY });
-        float.classList.add('is-on');
+    rows.forEach((row) => {
+      row.addEventListener('mouseenter', () => {
         list.classList.add('is-hovering');
         rows.forEach((r) => r.classList.toggle('is-on', r === row));
-        imgs.forEach((im, j) => im.classList.toggle('is-on', j === i));
       });
     });
     list.addEventListener('mouseleave', () => {
-      float.classList.remove('is-on');
       list.classList.remove('is-hovering');
       rows.forEach((r) => r.classList.remove('is-on'));
     });
