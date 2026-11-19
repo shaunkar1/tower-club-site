@@ -7,6 +7,7 @@ The shared header, footer and page shell live in src/partials/.
 
     python3 build.py      # writes ./<name>.html for every page
 """
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -21,11 +22,12 @@ PAGES = {
     "125": ("125 Years", "125.html"),
     "house": ("The House", "house.html"),
     "leadership": ("Leadership", "leadership.html"),
+    "faceboard": ("Faceboard", "faceboard.html"),
     "alumni": ("Alumni", "alumni.html"),
     "members": ("Members", "members.html"),
     "join": ("Join Tower", "join.html"),
 }
-NAV = ["history", "125", "house", "leadership", "alumni", "members"]
+NAV = ["history", "125", "house", "leadership", "faceboard", "alumni", "members"]
 
 META_RE = re.compile(r"^\s*<!--meta\s+(\{.*?\})\s*-->\s*", re.S)
 
@@ -64,8 +66,30 @@ def next_page(slug):
   </a>"""
 
 
+AVATAR_RE = re.compile(r'(<span class="roster__avatar" data-photo="([a-z0-9-]+)"[^>]*>)[^<]*(</span>)')
+
+
+def with_officer_photos(html):
+    # An officer's circle shows initials until images/officers/<first-last>.jpg (or .png/.webp) exists
+    def swap(m):
+        for ext in ("jpg", "jpeg", "png", "webp"):
+            if (ROOT / "images" / "officers" / f"{m.group(2)}.{ext}").exists():
+                return f'{m.group(1)}<img src="images/officers/{m.group(2)}.{ext}" alt="" loading="lazy" />{m.group(3)}'
+        return m.group(0)
+
+    return AVATAR_RE.sub(swap, html)
+
+
+def asset_version():
+    # Changes whenever the CSS or JS changes, so browsers fetch fresh copies instead of stale cached ones
+    digest = hashlib.sha1()
+    for path in sorted([*ROOT.glob("css/*.css"), *ROOT.glob("js/*.js")]):
+        digest.update(path.read_bytes())
+    return digest.hexdigest()[:10]
+
+
 def build():
-    shell = partial("shell")
+    shell = partial("shell").replace("{{v}}", asset_version())
     header, footer = partial("header"), partial("footer")
     for slug, (label, href) in PAGES.items():
         raw = (SRC / "pages" / href).read_text()
@@ -85,7 +109,7 @@ def build():
             .replace("{{slug}}", slug)
             .replace("{{label}}", label)
         )
-        (ROOT / href).write_text(page)
+        (ROOT / href).write_text(with_officer_photos(page))
         print(f"built {href}")
 
 

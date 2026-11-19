@@ -5,13 +5,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Princeton Tower Club</title>
-  <meta name="description" content="Princeton Tower Club, an upper-class eating club at 13 Prospect Avenue since 1902, now celebrating 125 years." />
+  <meta name="description" content="Princeton Tower Club, an upper-class eating club at Princeton University since 1902." />
   <meta name="theme-color" content="#0b1a2e" />
   <link rel="icon" href="images/ptc-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=d97bbaa918" />
   <script>
     // Before first paint: skip the long preloader once this session has seen it
     (function () {
@@ -25,13 +25,7 @@
 
   <!-- First visit: the tower draws itself while the years count up -->
   <div class="loader" aria-hidden="true">
-    <svg class="loader__tower" viewBox="0 0 120 160" fill="none">
-      <path d="M20 155 V48 H30 V36 H42 V48 H54 V36 H66 V48 H78 V36 H90 V48 H100 V155 Z" />
-      <path d="M48 155 V122 a12 12 0 0 1 24 0 V155" />
-      <rect x="44" y="62" width="32" height="34" rx="2" />
-      <path d="M60 68 V90 M50 79 H70" />
-      <path d="M4 155 H116" />
-    </svg>
+    <span class="logo-mark loader__logo"></span>
     <div class="loader__count">1902</div>
     <div class="loader__caption"><span>Princeton Tower Club</span><span class="loader__125">Celebrating 125 years</span></div>
     <div class="loader__bar"><span></span></div>
@@ -56,6 +50,7 @@
       <a href="125.html" data-scramble>125 Years<i class="nav__dot" aria-hidden="true"></i></a>
       <a href="house.html" data-scramble>The House</a>
       <a href="leadership.html" data-scramble>Leadership</a>
+      <a href="faceboard.html" data-scramble>Faceboard</a>
       <a href="alumni.html" data-scramble>Alumni</a>
       <a href="members.html" data-scramble>Members</a>
       <a href="join.html" class="nav__cta">Join Tower</a>
@@ -71,9 +66,10 @@
     <a href="125.html"><i>03</i>125 Years</a>
     <a href="house.html"><i>04</i>The House</a>
     <a href="leadership.html"><i>05</i>Leadership</a>
-    <a href="alumni.html"><i>06</i>Alumni</a>
-    <a href="members.html"><i>07</i>Members</a>
-    <a href="join.html"><i>08</i>Join Tower</a>
+    <a href="faceboard.html"><i>06</i>Faceboard</a>
+    <a href="alumni.html"><i>07</i>Alumni</a>
+    <a href="members.html"><i>08</i>Members</a>
+    <a href="join.html"><i>09</i>Join Tower</a>
       </nav>
       <div class="menu__foot">
         <span>13 Prospect Avenue · Princeton, NJ</span>
@@ -85,7 +81,7 @@
 
   <main id="top">
 <!-- HERO -->
-    <section class="hero">
+    <section class="hero" data-live>
       <div class="hero__media"><img src="images/tower-wide.jpg" alt="The Tower Club clubhouse at 13 Prospect Avenue" /></div>
       <div class="hero__shade"></div>
 
@@ -122,8 +118,8 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>Est. 1902</span><b>✦</b><span>Always True Blue</span><b>✦</b><span>13 Prospect Avenue</span><b>✦</b><span>125 Years</span><b>✦</b><span>Co-ed since 1971</span><b>✦</b>
-        <span>Est. 1902</span><b>✦</b><span>Always True Blue</span><b>✦</b><span>13 Prospect Avenue</span><b>✦</b><span>125 Years</span><b>✦</b><span>Co-ed since 1971</span><b>✦</b>
+        <span>Est. 1902</span><b>✦</b><span>Always True Blue</span><b>✦</b><span>13 Prospect Avenue</span><b>✦</b><span>125 Years</span><b>✦</b><span>Princeton, New Jersey</span><b>✦</b>
+        <span>Est. 1902</span><b>✦</b><span>Always True Blue</span><b>✦</b><span>13 Prospect Avenue</span><b>✦</b><span>125 Years</span><b>✦</b><span>Princeton, New Jersey</span><b>✦</b>
       </div>
     </div>
 
@@ -132,7 +128,7 @@
       <div class="container">
         <p class="eyebrow" data-reveal><span class="num">01</span>Welcome to Tower</p>
         <p class="statement" data-words>
-          For a hundred and twenty-five years, Tower has been where Princetonians gather to share a meal, argue about everything, cheer on intramurals, and build friendships that last long after graduation.
+          Since 1902, Tower has been a second home for Princeton students. It is where we share our meals, look out for one another, and make friends we keep for the rest of our lives.
         </p>
         <div class="stats">
           <div class="stat" data-reveal>
@@ -141,15 +137,15 @@
           </div>
           <div class="stat" data-reveal>
             <span class="stat__num" data-odometer>1917</span>
-            <span class="stat__label">Our Collegiate Gothic clubhouse at 13 Prospect is completed</span>
+            <span class="stat__label">The year our clubhouse at 13 Prospect was completed</span>
           </div>
           <div class="stat" data-reveal>
-            <span class="stat__num" data-odometer>1971</span>
-            <span class="stat__label">Among the first clubs on the Street to admit women</span>
+            <span class="stat__num"><span data-odometer>50</span><sup>+</sup></span>
+            <span class="stat__label">Meal options every week, made to order</span>
           </div>
           <div class="stat" data-reveal>
-            <span class="stat__num"><span data-odometer>220</span><sup>+</sup></span>
-            <span class="stat__label">Upper-class members, juniors and seniors</span>
+            <span class="stat__num" data-odometer>220</span>
+            <span class="stat__label">220 juniors and seniors call Tower home</span>
           </div>
         </div>
       </div>
@@ -162,10 +158,10 @@
         <div class="outline-num" aria-hidden="true">125</div>
         <div class="anniv-teaser__copy">
           <p class="eyebrow eyebrow--gold" data-reveal><span class="num">02</span>1902 — 2027</p>
-          <h2 class="display display--md">A century and a quarter <em>on the Street.</em></h2>
-          <p data-reveal>Tower turns 125 this year. We’re marking it with a year of dinners, reunions and stories, and every member, past and present, is invited home to 13 Prospect.</p>
+          <h2 class="display display--md">Our 125th year <em>is almost here.</em></h2>
+          <p data-reveal>Tower turns 125 in 2027. We’re planning a celebration for every member, past and present, and we’ll share the details soon.</p>
           <div class="btn-row" data-reveal>
-            <a class="btn btn--gold magnetic" href="125.html"><span>Explore the celebration</span></a>
+            <a class="btn btn--gold magnetic" href="125.html"><span>Learn more</span></a>
           </div>
         </div>
       </div>
@@ -177,32 +173,44 @@
         <div class="section-head section-head--split">
           <div>
             <p class="eyebrow" data-reveal><span class="num">03</span>Inside Tower</p>
-            <h2 class="display">A house built <br /><em>for long dinners.</em></h2>
+            <h2 class="display">Where we <br /><em>come together.</em></h2>
           </div>
-          <p class="section-head__aside" data-reveal>From the light-filled dining room to the terrace over the back lawn, 13 Prospect is made for gathering.<br /><br /><a class="link-arrow" href="house.html">Tour the house <span>→</span></a></p>
+          <p class="section-head__aside" data-reveal>Our clubhouse has been Tower’s home since 1917. These are a few of the rooms where our days begin and end.<br /><br /><a class="link-arrow" href="house.html">Tour the house <span>→</span></a></p>
         </div>
         <div class="accordion-gallery" data-reveal>
           <figure class="ag__panel is-active">
-            <img src="images/interiors/dining-hall.jpg" alt="Tower's dining room with pendant lights and tall windows" loading="lazy" />
-            <figcaption class="ag__cap"><span>01</span><h3>The Dining Room</h3><p>Three meals a day under the pendant lights. It’s the heart of the club, and a favorite study spot in off hours.</p></figcaption>
+            <img src="images/interiors/dining-hall.jpg" alt="The new dining room in Tower's addition" loading="lazy" />
+            <figcaption class="ag__cap"><span>01</span><h3>The Addition</h3><p>Our newest dining room, with tall windows that look out into the trees.</p></figcaption>
           </figure>
-          <figure class="ag__panel">
-            <img src="images/interiors/great-room.jpg" alt="The Great Room bar with brick columns" loading="lazy" />
-            <figcaption class="ag__cap"><span>02</span><h3>The Great Room</h3><p>The bar, game nights, and French doors that open onto the backyard.</p></figcaption>
+          <!-- Placeholders until photos are ready: add an <img> and drop the --soon class -->
+          <figure class="ag__panel ag__panel--soon">
+            <span class="logo-mark ag__mark" aria-hidden="true"></span>
+            <figcaption class="ag__cap"><span>02</span><h3>The Great Room</h3><p>Photos coming soon.</p></figcaption>
           </figure>
-          <figure class="ag__panel">
-            <img src="images/interiors/backyard-terrace.jpg" alt="The back terrace and addition overlooking the lawn" loading="lazy" />
-            <figcaption class="ag__cap"><span>03</span><h3>The Terrace</h3><p>Brick, glass and a view over the lawn: the best seat in the house in spring.</p></figcaption>
+          <figure class="ag__panel ag__panel--soon">
+            <span class="logo-mark ag__mark" aria-hidden="true"></span>
+            <figcaption class="ag__cap"><span>03</span><h3>The Terrace</h3><p>Photos coming soon.</p></figcaption>
           </figure>
-          <figure class="ag__panel">
-            <img src="images/interiors/rear-lawn.jpg" alt="The back lawn of Tower Club" loading="lazy" />
-            <figcaption class="ag__cap"><span>04</span><h3>The Lawn</h3><p>Lawnparties, spring dinners, and the occasional game of catch.</p></figcaption>
+          <figure class="ag__panel ag__panel--soon">
+            <span class="logo-mark ag__mark" aria-hidden="true"></span>
+            <figcaption class="ag__cap"><span>04</span><h3>The Lawn</h3><p>Photos coming soon.</p></figcaption>
           </figure>
-          <figure class="ag__panel">
-            <img src="images/tower-wiki.jpg" alt="The tower at the center of the clubhouse facade" loading="lazy" />
-            <figcaption class="ag__cap"><span>05</span><h3>The Tower</h3><p>Crenellated and carved with the club seal, it gives the club its name.</p></figcaption>
+          <figure class="ag__panel ag__panel--soon">
+            <span class="logo-mark ag__mark" aria-hidden="true"></span>
+            <figcaption class="ag__cap"><span>05</span><h3>The Tower</h3><p>Photos coming soon.</p></figcaption>
           </figure>
         </div>
+      </div>
+    </section>
+
+    <!-- PHOTO TRAIL -->
+    <section class="trail" id="trail" data-trail="images/archive/1902-monastery.jpg|1902|The Monastery; images/archive/1902-incubator.jpg|1903|The Incubator; images/archive/1895-old-cottage.jpg|1904|89 Prospect; images/archive/1911-fine-house.jpg|1911|The Fine House; images/archive/1916-rendering.jpg|1915|Barnes’s design; images/archive/1919-clubhouse.jpg|1917|13 Prospect; images/archive/1921-clubhouse.jpg|1921|The front walk; images/archive/1930s-prospect.jpg|Mid-century|From the Street; images/tower-wide.jpg|Today|Spring on Prospect; images/tower-wiki.jpg|Today|The front walk; images/clubhouse-summer.jpg|Today|Summer; images/interiors/dining-hall.jpg|Today|The new addition; images/interiors/great-room.jpg|Today|The Great Room; images/interiors/backyard-terrace.jpg|Today|The terrace; images/interiors/rear-lawn.jpg|Today|The back lawn; images/interiors/dining-windows.jpg|Today|By the windows">
+      <div class="trail__stage" aria-hidden="true"></div>
+      <div class="trail__copy">
+        <p class="eyebrow">1902 — Today</p>
+        <h2 class="trail__title">Scroll through <br /><em>Tower.</em></h2>
+        <p class="trail__now" aria-hidden="true"></p>
+        <p class="trail__sub">Photographs of Tower through the years, from our first homes to today. Keep scrolling to see them all.</p>
       </div>
     </section>
 
@@ -211,34 +219,16 @@
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-reveal><span class="num">04</span>Life at Tower</p>
-          <h2 class="display">The center of <br /><em>our social life.</em></h2>
+          <h2 class="display">A home <br /><em>away from home.</em></h2>
         </div>
-        <div class="cards">
-          <article class="card tilt" data-reveal>
-            <div class="card__img"><img src="images/interiors/dining-windows.jpg" alt="" loading="lazy" /></div>
-            <span class="card__num">01</span>
-            <h3>The Table</h3>
-            <p>Three meals a day under one roof, plus open meals, guest nights, and dinners that turn into the best conversations of the week.</p>
-          </article>
-          <article class="card tilt" data-reveal>
-            <div class="card__img"><img src="images/interiors/great-room.jpg" alt="" loading="lazy" /></div>
-            <span class="card__num">02</span>
-            <h3>Social Calendar</h3>
-            <p>Formals, Lawnparties, theme nights and study breaks, planned by members for members all year long.</p>
-          </article>
-          <article class="card tilt" data-reveal>
-            <div class="card__img"><img src="images/elm.jpg" alt="" loading="lazy" /></div>
-            <span class="card__num">03</span>
-            <h3>Intramurals</h3>
-            <p>Tower fields teams across the IM season. Come for the competition and stay for the post-game dinner.</p>
-          </article>
-          <article class="card tilt" data-reveal>
-            <div class="card__img"><img src="images/nassau.jpg" alt="" loading="lazy" /></div>
-            <span class="card__num">04</span>
-            <h3>Alumni Network</h3>
-            <p>Our Alumni Mentorship Program connects current members with Tower graduates in every field.</p>
-          </article>
+        <!-- Photos from @princetontowerclub on Instagram -->
+        <div class="life">
+          <div class="life__item life__item--wide life__item--club" data-reveal><img src="images/life/club-photo.jpg" alt="Tower members together on the front lawn of the clubhouse" loading="lazy" /></div>
+          <div class="life__item life__item--dinner" data-reveal><img src="images/life/new-members-dinner.jpg" alt="Members in Tower jerseys at dinner in the dining room" loading="lazy" /></div>
+          <div class="life__item" data-reveal><img src="images/life/holi.jpg" alt="Members throwing colored powder on the back lawn for Holi" loading="lazy" /></div>
+          <div class="life__item life__item--wide life__item--party" data-reveal><img src="images/life/spring-party.jpg" alt="Two members singing at a Tower party" loading="lazy" /></div>
         </div>
+        <p class="life__credit" data-reveal>Follow along on Instagram: <a href="https://www.instagram.com/princetontowerclub/" target="_blank" rel="noopener">@princetontowerclub</a></p>
       </div>
     </section>
 
@@ -247,15 +237,15 @@
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-reveal><span class="num">05</span>Explore Tower</p>
-          <h2 class="display">Every corner <br /><em>of the club.</em></h2>
+          <h2 class="display">Get to know <br /><em>Tower.</em></h2>
         </div>
         <div class="hover-list" data-hover-list>
-          <a class="hl__row" href="history.html" data-img="images/archive/1921-clubhouse.jpg"><span class="hl__thumb"><img src="images/archive/1921-clubhouse.jpg" alt="" loading="lazy" /></span><span class="hl__num">01</span><span class="hl__title">Our History</span><span class="hl__meta">Five homes in fifteen years, then a century on Prospect.</span></a>
-          <a class="hl__row" href="125.html" data-img="images/tower-wide.jpg"><span class="hl__thumb"><img src="images/tower-wide.jpg" alt="" loading="lazy" /></span><span class="hl__num">02</span><span class="hl__title">125 Years</span><span class="hl__meta">The anniversary year: events, stories and the 125th Fund.</span></a>
+          <a class="hl__row" href="history.html" data-img="images/archive/1921-clubhouse.jpg"><span class="hl__thumb"><img src="images/archive/1921-clubhouse.jpg" alt="" loading="lazy" /></span><span class="hl__num">01</span><span class="hl__title">Our History</span><span class="hl__meta">How Tower began, and how it found its home.</span></a>
+          <a class="hl__row" href="125.html" data-img="images/tower-wide.jpg"><span class="hl__thumb"><img src="images/tower-wide.jpg" alt="" loading="lazy" /></span><span class="hl__num">02</span><span class="hl__title">125 Years</span><span class="hl__meta">Our 125th anniversary in 2027.</span></a>
           <a class="hl__row" href="house.html" data-img="images/interiors/dining-hall.jpg"><span class="hl__thumb"><img src="images/interiors/dining-hall.jpg" alt="" loading="lazy" /></span><span class="hl__num">03</span><span class="hl__title">The House</span><span class="hl__meta">A room-by-room tour of 13 Prospect Avenue.</span></a>
           <a class="hl__row" href="leadership.html" data-img="images/interiors/hall.jpg"><span class="hl__thumb"><img src="images/interiors/hall.jpg" alt="" loading="lazy" /></span><span class="hl__num">04</span><span class="hl__title">Leadership</span><span class="hl__meta">The officers and staff who keep the club running.</span></a>
-          <a class="hl__row" href="alumni.html" data-img="images/archive/1930s-prospect.jpg"><span class="hl__thumb"><img src="images/archive/1930s-prospect.jpg" alt="" loading="lazy" /></span><span class="hl__num">05</span><span class="hl__title">Alumni &amp; Giving</span><span class="hl__meta">Mentorship, the newsletter, and supporting the house.</span></a>
-          <a class="hl__row" href="members.html" data-img="images/interiors/great-room.jpg"><span class="hl__thumb"><img src="images/interiors/great-room.jpg" alt="" loading="lazy" /></span><span class="hl__num">06</span><span class="hl__title">Members</span><span class="hl__meta">Menus, the calendar, guest meals and house tools.</span></a>
+          <a class="hl__row" href="alumni.html" data-img="images/archive/1930s-prospect.jpg"><span class="hl__thumb"><img src="images/archive/1930s-prospect.jpg" alt="" loading="lazy" /></span><span class="hl__num">05</span><span class="hl__title">Alumni &amp; Giving</span><span class="hl__meta">Staying connected after graduation.</span></a>
+          <a class="hl__row" href="members.html" data-img="images/interiors/great-room.jpg"><span class="hl__thumb"><img src="images/interiors/great-room.jpg" alt="" loading="lazy" /></span><span class="hl__num">06</span><span class="hl__title">Members</span><span class="hl__meta">Everything current members need.</span></a>
         </div>
       </div>
     </section>
@@ -285,15 +275,15 @@
       <div class="container band__grid">
         <div class="band__copy">
           <p class="eyebrow eyebrow--light" data-reveal><span class="num">06</span>Recruitment</p>
-          <h2 class="display display--light">Find your place <br /><em>at the table.</em></h2>
-          <p data-reveal>Come to an open meal, meet members, and see if Tower feels like home. Signing up for updates doesn’t commit you to anything.</p>
+          <h2 class="display display--light">Come get <br /><em>to know us.</em></h2>
+          <p data-reveal>Sign up for updates and we’ll let you know about events and recruitment. It doesn’t commit you to anything.</p>
           <div class="btn-row" data-reveal>
             <a class="btn btn--light magnetic" href="join.html"><span>How to join</span></a>
             <a class="btn btn--ghost magnetic" href="join.html#signup"><span>Get updates</span></a>
           </div>
         </div>
         <ol class="steps" data-reveal>
-          <li><b>01</b>Come to an open meal</li>
+          <li><b>01</b>Sign up for updates</li>
           <li><b>02</b>Meet members at events</li>
           <li><b>03</b>Sign in during recruitment</li>
         </ol>
@@ -321,7 +311,7 @@
       </div>
       <div>
         <h4>The Club</h4>
-        <p><a href="history.html">History</a><br /><a href="125.html">125 Years</a><br /><a href="house.html">The House</a><br /><a href="leadership.html">Leadership</a></p>
+        <p><a href="history.html">History</a><br /><a href="125.html">125 Years</a><br /><a href="house.html">The House</a><br /><a href="leadership.html">Leadership</a><br /><a href="faceboard.html">Faceboard</a></p>
       </div>
       <div>
         <h4>Connect</h4>
@@ -330,7 +320,7 @@
     </div>
     <div class="footer__word" aria-hidden="true"><span>T</span><span>o</span><span>w</span><span>e</span><span>r</span></div>
     <div class="container footer__base">
-      <span>© 2026 Princeton Tower Club · 125 years on Prospect Avenue</span>
+      <span>© 2026 Princeton Tower Club · Est. 1902</span>
       <a href="#top" class="to-top">Back to top ↑</a>
     </div>
   </footer>
@@ -339,6 +329,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=d97bbaa918"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@
   };
   const PAGE_LABELS = {
     'index.html': 'Home', 'history.html': 'History', '125.html': '125 Years', 'house.html': 'The House',
-    'leadership.html': 'Leadership', 'alumni.html': 'Alumni', 'members.html': 'Members', 'join.html': 'Join Tower',
+    'leadership.html': 'Leadership', 'faceboard.html': 'Faceboard', 'alumni.html': 'Alumni', 'members.html': 'Members', 'join.html': 'Join Tower',
   };
   const fileOf = (path) => path.split('/').pop() || 'index.html';
 
@@ -114,7 +114,8 @@
           count.classList.add('is-gold');
           loader.classList.add('is-125');
         })
-        .fromTo(count, { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.7, ease: 'expo.out' })
+        // immediateRender off, or this hides the year counter before it starts counting
+        .fromTo(count, { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.7, ease: 'expo.out', immediateRender: false })
         .to(loader, { yPercent: -100, duration: 1.1, ease: 'expo.inOut' }, '+=0.35')
         .add(ready, '-=0.8');
     }
@@ -423,6 +424,88 @@
     });
   });
 
+  /* ---------- Live hero: the clubhouse follows the real time on Prospect Avenue ---------- */
+  $$('.hero[data-live]').forEach((hero) => {
+    const media = $('.hero__media', hero);
+    const photo = $('img', media);
+    // Window panes in the 1920×1080 hero photo that glow after dark
+    const IMG = [1920, 1080];
+    const WINDOWS = [[356, 502, 160, 78], [420, 400, 28, 52], [334, 694, 206, 96], [682, 700, 54, 126], [776, 426, 72, 66], [1016, 426, 40, 66],
+      [790, 546, 104, 80], [922, 548, 44, 72], [1016, 546, 40, 72], [792, 710, 104, 64], [1012, 724, 48, 40], [1256, 474, 48, 48], [1474, 474, 48, 48],
+      [1142, 572, 92, 74], [1356, 572, 120, 74], [1546, 572, 64, 74], [1114, 728, 80, 48], [1434, 724, 144, 80], [1250, 730, 64, 116]];
+    // Approximate sunrise and sunset in Princeton for each month, in local clock hours
+    const SUN = [[7.25, 16.95], [6.9, 17.5], [7.1, 19.1], [6.4, 19.6], [5.75, 20.1], [5.45, 20.5], [5.6, 20.45], [6.1, 19.95], [6.6, 19.15], [7.15, 18.3], [6.75, 16.75], [7.15, 16.6]];
+    const LABEL = { day: 'Daylight', dusk: 'Golden hour', night: 'After dark' };
+    const zone = { timeZone: 'America/New_York' };
+    const phaseNow = () => {
+      const parts = new Intl.DateTimeFormat('en-US', { ...zone, hour: 'numeric', minute: 'numeric', month: 'numeric', hour12: false }).formatToParts(new Date());
+      const get = (t) => Number(parts.find((p) => p.type === t).value);
+      const h = (get('hour') % 24) + get('minute') / 60;
+      const [rise, set] = SUN[get('month') - 1];
+      if (h > set + 0.6 || h < rise - 0.6) return 'night';
+      if (h > set - 0.9 || h < rise + 0.5) return 'dusk';
+      return 'day';
+    };
+
+    const layer = document.createElement('div');
+    layer.className = 'hero__layer live';
+    layer.innerHTML = '<div class="live__dusk"></div><div class="live__night"></div><canvas class="live__stars"></canvas><div class="live__windows"></div>';
+    media.appendChild(layer);
+    const wins = WINDOWS.map(() => {
+      const w = document.createElement('span');
+      w.className = 'live__win';
+      w.style.transitionDelay = `${Math.random() * 1.6}s`;
+      $('.live__windows', layer).appendChild(w);
+      return w;
+    });
+    const chip = document.createElement('div');
+    chip.className = 'live-chip';
+    chip.innerHTML = `<span class="live-chip__dot"></span><span class="live-chip__text"><b>Live</b><span> from Prospect Ave</span> · <em></em></span>
+      <span class="live-chip__modes" role="group" aria-label="Preview the clubhouse at different times of day">${['Now', 'Day', 'Dusk', 'Night']
+        .map((m) => `<button type="button" data-m="${m === 'Now' ? 'auto' : m.toLowerCase()}">${m}</button>`).join('')}</span>`;
+    hero.appendChild(chip);
+
+    const place = () => {
+      const W = media.offsetWidth, H = media.offsetHeight;
+      const s = Math.max(W / IMG[0], H / IMG[1]), ox = (W - IMG[0] * s) / 2, oy = (H - IMG[1] * s) / 2;
+      wins.forEach((w, i) => {
+        const [x, y, ww, hh] = WINDOWS[i];
+        Object.assign(w.style, { left: `${ox + x * s}px`, top: `${oy + y * s}px`, width: `${ww * s}px`, height: `${hh * s}px` });
+      });
+      const stars = $('.live__stars', layer);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      stars.width = W * dpr;
+      stars.height = H * dpr;
+      const c = stars.getContext('2d');
+      c.scale(dpr, dpr);
+      c.fillStyle = '#fff';
+      for (let i = 0; i < 170; i++) {
+        c.globalAlpha = Math.random() * 0.8 + 0.2;
+        c.beginPath();
+        c.arc(Math.random() * W, Math.random() * H * 0.42, Math.random() * 1.1 + 0.25, 0, Math.PI * 2);
+        c.fill();
+      }
+    };
+    let mode = 'auto';
+    const apply = () => {
+      const phase = mode === 'auto' ? phaseNow() : mode;
+      layer.dataset.phase = phase;
+      photo.dataset.phase = phase;
+      // Night: nearly every window lit. Dusk: about half. Day: none.
+      wins.forEach((w) => w.classList.toggle('is-lit', phase === 'night' ? Math.random() > 0.12 : phase === 'dusk' && Math.random() > 0.5));
+      const time = new Intl.DateTimeFormat('en-US', { ...zone, hour: 'numeric', minute: '2-digit' }).format(new Date());
+      $('.live-chip__text em', chip).textContent = mode === 'auto' ? `${time} · ${LABEL[phase]}` : `Preview · ${LABEL[phase]}`;
+      $$('[data-m]', chip).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === mode)));
+    };
+    $$('[data-m]', chip).forEach((b) => b.addEventListener('click', () => { mode = b.dataset.m; apply(); }));
+    window.addEventListener('resize', place);
+    place();
+    apply();
+    setInterval(() => mode === 'auto' && apply(), 30000);
+    // After dark a window or two flicks on and off, like people coming and going
+    setInterval(() => layer.dataset.phase === 'night' && wins[(Math.random() * wins.length) | 0].classList.toggle('is-lit'), 2200);
+  });
+
   if (!motion) return;
 
   /* ======================= GSAP-driven motion ======================= */
@@ -526,6 +609,69 @@
 
   // Process line draws across the steps
   $$('.process__line').forEach((l) => gsap.to(l, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: l.parentElement, start: 'top 75%', end: 'bottom 55%', scrub: true } }));
+
+  // Photo trail: scrolling (or moving the cursor) flips through Tower's photographs in order
+  $$('[data-trail]').forEach((sec) => {
+    const stage = $('.trail__stage', sec);
+    const label = $('.trail__now', sec);
+    const photos = sec.dataset.trail.split(';').map((item) => {
+      const [src, year, name] = item.split('|').map((x) => x.trim());
+      return { src, year, name };
+    });
+    photos.forEach((p) => (new Image().src = p.src));
+    let z = 1, shown = -1, next = 0, px = null, py = null, mx = -999, my = -999;
+    const show = (k, x, y) => {
+      const p = photos[k];
+      const im = document.createElement('img');
+      im.className = 'trail__img';
+      im.alt = '';
+      im.src = p.src;
+      stage.appendChild(im);
+      gsap.set(im, { x, y, xPercent: -50, yPercent: -50, zIndex: z++, rotate: gsap.utils.random(-12, 12), scale: 0.3, opacity: 0 });
+      gsap.timeline({ onComplete: () => im.remove() })
+        .to(im, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out' })
+        .to(im, { scale: 0.55, opacity: 0, y: y + 80, rotate: '+=10', duration: 0.9, ease: 'power3.in' }, '+=0.7');
+      label.textContent = p.year;
+      gsap.fromTo(label, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, overwrite: true });
+    };
+    // Drop the next photo under the cursor if it's over the section, otherwise along a gentle path
+    const spot = (t) => {
+      const r = sec.getBoundingClientRect();
+      if (px !== null && px >= r.left && px <= r.right && py >= r.top && py <= r.bottom) {
+        return [px - r.left + gsap.utils.random(-40, 40), py - r.top + gsap.utils.random(-30, 30)];
+      }
+      return [sec.offsetWidth * (0.18 + 0.64 * t) + gsap.utils.random(-50, 50), sec.offsetHeight * (0.5 + Math.sin(t * Math.PI * 3) * 0.24)];
+    };
+    window.addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; }, { passive: true });
+    // Pinned while you scroll through it: each step of the scroll brings up the next photo
+    ScrollTrigger.create({
+      trigger: sec, start: 'top top', end: '+=160%', pin: true, refreshPriority: 1,
+      onUpdate: (self) => {
+        const k = Math.min(photos.length - 1, Math.floor(self.progress * photos.length));
+        if (k === shown) return;
+        shown = next = k;
+        show(k, ...spot(self.progress));
+      },
+    });
+    sec.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      const r = sec.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      if (Math.hypot(x - mx, y - my) < 100) return;
+      mx = x;
+      my = y;
+      show(next++ % photos.length, x, y);
+    });
+  });
+  ScrollTrigger.sort();
+
+  // 125: "Coming soon" rises out of its masks, then the rule draws
+  $$('.soon').forEach((sec) => {
+    gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top 70%' } })
+      .from($$('.soon__word', sec), { yPercent: 110, rotate: 4, duration: 1.4, ease: 'expo.out', stagger: 0.14 })
+      .from($('.soon__dots', sec), { opacity: 0, x: -20, duration: 0.6, ease: 'power3.out' }, '-=0.7')
+      .to($('.soon__rule', sec), { scaleX: 1, duration: 1.2, ease: 'expo.inOut' }, '-=0.6');
+  });
 
   // 125: zoom out of the clubhouse photo into the numerals
   const ah = $('.anniv-hero');
